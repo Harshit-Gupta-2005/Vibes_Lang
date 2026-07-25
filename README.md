@@ -215,5 +215,4 @@ Called out here deliberately, so nothing below reads as an accidental bug:
 
 ## License
 
-MIT — see [`LICENSE`](./LICENSE). Swap in your name in that file before
-publishing.
+MIT — see [`LICENSE`](./LICENSE).
