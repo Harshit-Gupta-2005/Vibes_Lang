@@ -1,5 +1,7 @@
 # Vibes 🌀
 
+[![Tests](https://github.com/Harshit-Gupta-2005/Vibes_Lang/actions/workflows/tests.yml/badge.svg)](https://github.com/Harshit-Gupta-2005/Vibes_Lang/actions/workflows/tests.yml)
+
 ### vibecode with vibes
 
 > An esolang where syntax is entirely vibes-based.
@@ -215,4 +217,5 @@ Called out here deliberately, so nothing below reads as an accidental bug:
 
 ## License
 
-MIT — see [`LICENSE`](./LICENSE).
+MIT — see [`LICENSE`](./LICENSE). Swap in your name in that file before
+publishing.
