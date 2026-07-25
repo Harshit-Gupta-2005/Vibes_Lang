@@ -1,0 +1,32 @@
+~ custom error types, inheriting from a built-in one ~
+
+new aesthetic InvalidNameError(wrong vibes)
+vibes on
+vibes off
+
+new vibes validate_name(name)
+vibes on
+  it's giving len(name) vibe match 0
+  vibes on
+    big yikes InvalidNameError("name can't be empty")
+  vibes off
+  sending vibes name
+vibes off
+
+catch the vibe
+vibes on
+  validate_name("")
+vibes off
+bad vibes InvalidNameError as e
+vibes on
+  manifesting "custom error caught: " + e
+vibes off
+
+catch the vibe
+vibes on
+  big yikes InvalidNameError
+vibes off
+bad vibes wrong vibes as e
+vibes on
+  manifesting "also caught via the parent type: " + e
+vibes off

@@ -1,0 +1,21 @@
+~ functions, recursion, and channeling the math module ~
+
+channeling math
+
+new vibes factorial(n)
+vibes on
+  it's giving n no more vibes than 1
+  vibes on
+    sending vibes 1
+  vibes off
+  sending vibes n * factorial(n - 1)
+vibes off
+
+new vibes hypotenuse(a, b)
+vibes on
+  sending vibes math.sqrt(a * a + b * b)
+vibes off
+
+manifesting factorial(5)
+manifesting hypotenuse(3, 4)
+manifesting math.pi

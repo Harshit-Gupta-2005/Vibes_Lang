@@ -1,0 +1,26 @@
+~ fizzbuzz, vibes style ~
+
+new vibes is_divisible(a, b)
+vibes on
+  sending vibes a / b vibe match int(a / b)
+vibes off
+
+vibing through i in range(1, 16)
+vibes on
+  it's giving is_divisible(i, 15)
+  vibes on
+    manifesting "fizzbuzz"
+  vibes off
+  or it's giving is_divisible(i, 3)
+  vibes on
+    manifesting "fizz"
+  vibes off
+  or it's giving is_divisible(i, 5)
+  vibes on
+    manifesting "buzz"
+  vibes off
+  or not
+  vibes on
+    manifesting str(i)
+  vibes off
+vibes off

@@ -1,0 +1,37 @@
+~ error handling: bad vibes, or not, good vibes only ~
+~ note: no list/array literals in vibes yet, so we just call this
+  three times by hand instead of looping over a collection ~
+
+new vibes safe_divide(a, b)
+vibes on
+  it's giving b vibe match 0
+  vibes on
+    big yikes wrong vibes("can't divide by zero, bestie")
+  vibes off
+  sending vibes a / b
+vibes off
+
+new vibes try_divide(a, b)
+vibes on
+  catch the vibe
+  vibes on
+    result vibes with safe_divide(a, b)
+    manifesting result
+  vibes off
+  bad vibes wrong vibes as e
+  vibes on
+    manifesting "bad vibes detected: " + e
+  vibes off
+  or not
+  vibes on
+    manifesting "that one worked out fine"
+  vibes off
+  good vibes only
+  vibes on
+    manifesting "-- moving on --"
+  vibes off
+vibes off
+
+try_divide(10, 2)
+try_divide(5, 0)
+try_divide(9, 3)

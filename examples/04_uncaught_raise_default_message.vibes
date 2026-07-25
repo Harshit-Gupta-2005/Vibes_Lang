@@ -1,0 +1,4 @@
+~ a user-raised error that nothing catches -- shows the built-in
+  default message for "ghosted" (KeyError-flavored) ~
+
+big yikes ghosted

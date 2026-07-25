@@ -1,0 +1,11 @@
+~ accessing an attribute that was never set on the instance ~
+
+new aesthetic Empty
+vibes on
+  new vibes noop(self)
+  vibes on
+  vibes off
+vibes off
+
+e vibes with Empty()
+manifesting e.this_attribute_does_not_exist

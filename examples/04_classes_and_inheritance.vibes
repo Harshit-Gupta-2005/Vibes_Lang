@@ -1,0 +1,39 @@
+~ classes, inheritance, and method overriding ~
+
+new aesthetic Animal
+vibes on
+  new vibes __init__(self, name)
+  vibes on
+    self.name vibes with name
+  vibes off
+
+  new vibes speak(self)
+  vibes on
+    manifesting self.name + " makes some kind of sound"
+  vibes off
+vibes off
+
+new aesthetic Dog(Animal)
+vibes on
+  new vibes speak(self)
+  vibes on
+    manifesting self.name + " says woof"
+  vibes off
+
+  new vibes fetch(self)
+  vibes on
+    manifesting self.name + " fetches the ball"
+  vibes off
+vibes off
+
+main_character_vibes
+vibes on
+  generic vibes with Animal("some critter")
+  rex vibes with Dog("rex")
+
+  generic.speak()
+  rex.speak()
+  rex.fetch()
+
+  that's a wrap
+vibes off

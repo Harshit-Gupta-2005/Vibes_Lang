@@ -1,0 +1,15 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "vibes-lang"
+version = "0.1.0"
+description = "Vibes: an esolang where syntax is entirely vibes-based"
+requires-python = ">=3.8"
+
+[project.scripts]
+vibes = "vibes.cli:main"
+
+[tool.setuptools]
+packages = ["vibes"]
