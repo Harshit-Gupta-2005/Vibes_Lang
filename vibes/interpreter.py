@@ -222,6 +222,10 @@ class Interpreter:
             raise VibesRuntimeError("VibeError: 'sending vibes' used outside of a function")
         except ExitSignal:
             pass  # that's a wrap -- a clean, deliberate stop, not an error
+        except RecursionError:
+            raise VibesRuntimeError(
+                "VibeError: stack overflow — you went too deep. touch grass."
+            )
 
     def _exec_body(self, statements):
         for stmt in statements:
@@ -449,28 +453,44 @@ class Interpreter:
 
     def _eval_call(self, node):
         # A plain Call's name might resolve to a user function, a class
-        # (instantiation), or fall through to a builtin -- in that order.
-        # Mirrors Python: a local def/class shadows a builtin of the same name.
-        candidate = None
+        # (instantiation), or -- only if the name isn't bound at all -- fall
+        # through to a builtin. Mirrors Python: a local def/class/variable
+        # always shadows a builtin of the same name, even if that local
+        # value isn't itself callable (previously this used `None` both as
+        # the "not found" signal and as a legitimately-resolved `no vibes`
+        # value, which conflated "undefined name" with "called no vibes"
+        # and let a shadowed non-callable incorrectly fall through to a
+        # same-named builtin -- fixed by tracking `found` explicitly).
+        found = True
         try:
             candidate = self.env.get(node.callee)
         except VibesNameError:
-            pass
+            candidate = None
+            found = False
 
         args = [self._eval(a) for a in node.args]
 
-        if isinstance(candidate, VibesClass):
-            return self._instantiate(candidate, args, node.line)
-
-        if isinstance(candidate, VibesFunction):
-            return self._call_function(candidate, args, node.line)
+        if found:
+            if isinstance(candidate, VibesClass):
+                return self._instantiate(candidate, args, node.line)
+            if isinstance(candidate, VibesFunction):
+                return self._call_function(candidate, args, node.line)
+            if candidate is None:
+                raise VibesRuntimeError(
+                    "VibeError: you called no vibes and then used it. what did "
+                    f"you expect. (line {node.line})"
+                )
+            raise VibesRuntimeError(
+                f"VibeError: '{node.callee}' isn't a function, a class, or "
+                f"anything else you can call — it's giving nothing. (line {node.line})"
+            )
 
         if node.callee in _BUILTINS:
             return _BUILTINS[node.callee](*args)
 
         raise VibesRuntimeError(
-            f"VibeError: '{node.callee}' isn't a function, a class, or anything "
-            f"else you can call — it's giving nothing. (line {node.line})"
+            f"VibeError: undefined variable '{node.callee}' — it literally "
+            f"does not exist, bestie. (line {node.line})"
         )
 
     def _make_raised(self, error_type_name, message_expr, line):

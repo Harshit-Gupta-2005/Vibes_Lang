@@ -134,6 +134,68 @@ def test_return_outside_function_raises_runtime_error():
     assert "outside of a function" in str(exc_info.value)
 
 
+def test_real_stack_overflow_gives_clean_spec_message_not_a_traceback():
+    # regression test: infinite recursion used to crash with a raw Python
+    # RecursionError traceback instead of the spec's own clean message.
+    src = """
+    new vibes go_forever(n)
+    vibes on
+      sending vibes go_forever(n + 1)
+    vibes off
+
+    manifesting go_forever(0)
+    """
+    with pytest.raises(VibesRuntimeError) as exc_info:
+        run(src)
+    assert "stack overflow" in str(exc_info.value)
+    assert "touch grass" in str(exc_info.value)
+
+
+def test_calling_a_variable_holding_no_vibes_gives_exact_spec_message():
+    # regression test: this used to fall back to a generic "isn't callable"
+    # message instead of the spec's specific wording for this exact case.
+    src = """
+    x vibes with no vibes
+    x()
+    """
+    with pytest.raises(VibesRuntimeError) as exc_info:
+        run(src)
+    assert "you called no vibes and then used it" in str(exc_info.value)
+
+
+def test_calling_an_undefined_name_matches_reading_an_undefined_variable():
+    # regression test: calling an undefined name used to give a different,
+    # inconsistent message from reading an undefined variable, even though
+    # Vibes has no separate function/variable namespaces.
+    call_msg = None
+    read_msg = None
+    try:
+        run("this_was_never_defined()")
+    except VibesRuntimeError as e:
+        call_msg = str(e)
+    try:
+        run("manifesting this_was_never_defined")
+    except Exception as e:
+        read_msg = str(e)
+
+    assert "undefined variable" in call_msg
+    assert "undefined variable" in read_msg
+
+
+def test_shadowed_builtin_name_does_not_fall_through_to_the_real_builtin():
+    # regression test: a local variable/value named the same as a builtin
+    # (e.g. `int`) used to be ignored when *calling* that name, incorrectly
+    # falling through to the real builtin instead of correctly reporting
+    # that the shadowed value isn't callable.
+    src = """
+    int vibes with 5
+    manifesting int(3)
+    """
+    with pytest.raises(VibesRuntimeError) as exc_info:
+        run(src)
+    assert "isn't a function" in str(exc_info.value)
+
+
 def test_loop_inside_function_with_break():
     src = """
     new vibes first_over(limit)

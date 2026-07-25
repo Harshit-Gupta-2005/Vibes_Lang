@@ -40,14 +40,14 @@ hey, bestie
 
 ## Status
 
-This is a complete, working v1. Every construct in [`vibes_spec.md`](./vibes_spec.md)
+This is a complete, working v1. Every construct in [`SPEC.md`](./SPEC.md)
 is implemented and tested — lexer, parser, and tree-walking interpreter, all
 built from scratch in Python with no dependency on Python's own grammar
 (renaming keywords doesn't get you Python's parser for free; see
-[Known limitations](#known-limitations--v2-ideas) for what's intentionally
+[Known limitations](#known-limitations) for what's intentionally
 out of scope for now).
 
-**174 tests, 0 failures.**
+**178 tests, 0 failures.**
 
 ---
 
@@ -63,8 +63,7 @@ cd vibes_lang
 pip install -e .
 ```
 
-This gives you a genuine `vibes` command on your PATH, matching the spec's
-own "Run with" line exactly:
+This gives you a genuine `vibes` command on your PATH:
 
 ```bash
 vibes run myfile.vibes
@@ -106,8 +105,7 @@ error, so you can see exactly what each failure mode looks like.
 
 ## Language overview
 
-Full keyword-by-keyword reference: [`vibes_spec.md`](./vibes_spec.md).
-Quick taste:
+Full keyword-by-keyword reference: [`SPEC.md`](./SPEC.md). Quick taste:
 
 | Vibes | Python equivalent |
 |---|---|
@@ -146,10 +144,10 @@ pip install pytest
 python3 -m pytest tests/ -v
 ```
 
-All 174 tests should pass. The suite is split one file per feature area
+All 178 tests should pass. The suite is split one file per feature area
 (lexer, parser/interpreter pairs for each language construct, CLI
-subprocess tests, and a final integration test that runs the spec's own
-full example program end-to-end) so a failure tells you roughly where to
+subprocess tests, and a final integration test that runs a complete
+example program end-to-end) so a failure tells you roughly where to
 look before you even read the traceback.
 
 ---
@@ -168,11 +166,11 @@ vibes_lang/
     interpreter.py       # tree-walking evaluator
     cli.py                # `vibes run file.vibes`
     __main__.py             # lets `python3 -m vibes` work with no install
-  tests/                     # one file per feature area, ~174 tests total
+  tests/                     # one file per feature area, ~178 tests total
   examples/                    # runnable .vibes programs
     errors/                     # programs that each demonstrate one error message
   pyproject.toml                 # packaging (gives you the `vibes` command)
-  vibes_spec.md                   # the original language spec
+  SPEC.md                         # the complete language reference
 ```
 
 **How it works, in one paragraph:** source text is tokenized in two phases —
@@ -190,20 +188,16 @@ once function calls swap in a child scope.
 
 ---
 
-## Known limitations / v2 ideas
+## Known limitations
 
 Called out here deliberately, so nothing below reads as an accidental bug:
 
 - **No collection types.** No list/tuple/dict/set literals, no indexing
-  (`x[0]`), no slicing. The spec doesn't mention them, so v1 doesn't have
-  them — this is the biggest gap if you want to write real programs with it.
+  (`x[0]`), no slicing — this is the biggest gap if you want to write real
+  programs with it.
 - **`bad vibes X as e` binds a plain string**, not a rich error object.
-  `e` is always just the error's message text (matches every example in the
-  spec, which only ever does `"prefix: " + e`), so a custom error subclass
+  `e` is always just the error's message text, so a custom error subclass
   can't carry extra queryable fields (like an error code) accessible via `e`.
-- **The v2 "runtime vibe system"** described in the spec (a global 0–100
-  energy level affecting execution) is intentionally not implemented —
-  the spec itself says to get the language working first and defer this.
 - Class bodies currently only allow method definitions (no class-level
   fields outside `__init__`).
 - `sending vibes` always requires an expression — no bare `return` — to
@@ -217,5 +211,4 @@ Called out here deliberately, so nothing below reads as an accidental bug:
 
 ## License
 
-MIT — see [`LICENSE`](./LICENSE). Swap in your name in that file before
-publishing.
+MIT — see [`LICENSE`](./LICENSE).
