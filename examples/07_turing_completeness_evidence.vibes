@@ -1,0 +1,46 @@
+~ concrete evidence of Turing-complete computational power, not just a
+  claimed label -- see tests/test_turing_completeness.py for the full
+  reasoning. two independent landmarks from computability theory:
+
+  1. the Ackermann function -- provably NOT expressible with only
+     fixed-count loops, no matter how deeply nested. computing it
+     correctly demonstrates real computational power beyond that.
+  2. the Collatz "stopping time" -- its iteration count can't be known in
+     advance for arbitrary input, so it requires a genuinely unbounded
+     while loop, not a disguised for loop. ~
+
+new vibes ackermann(m, n)
+vibes on
+  it's giving m vibe match 0
+  vibes on
+    sending vibes n + 1
+  vibes off
+  it's giving n vibe match 0
+  vibes on
+    sending vibes ackermann(m - 1, 1)
+  vibes off
+  sending vibes ackermann(m - 1, ackermann(m, n - 1))
+vibes off
+
+new vibes collatz_steps(n)
+vibes on
+  steps vibes with 0
+  keep the vibes going n vibe doesn't match 1
+  vibes on
+    it's giving n vibe match 2 * int(n / 2)
+    vibes on
+      n vibes with int(n / 2)
+    vibes off
+    or not
+    vibes on
+      n vibes with 3 * n + 1
+    vibes off
+    steps vibes with steps + 1
+  vibes off
+  sending vibes steps
+vibes off
+
+manifesting "ackermann(2, 3) = " + str(ackermann(2, 3))
+manifesting "ackermann(3, 3) = " + str(ackermann(3, 3))
+manifesting "collatz_steps(27) = " + str(collatz_steps(27))
+manifesting "collatz_steps(97) = " + str(collatz_steps(97))
